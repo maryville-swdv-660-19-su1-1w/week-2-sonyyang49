@@ -160,13 +160,58 @@ class GameModelTests( TestCase ):
     #  make this easier
 
     def test_is_game_over_is_false_if_guesses_left( self ):
-        pass
+        initialLettersGuessed = ['S', 'A', 'W', 'O', 'R','C']
+        game = Game(
+            word= 'TESTWORD',
+            guessed_word_state= ['','','S','','W','O','R',''],
+            letters_guessed = initialLettersGuessed.copy(),
+            guesses_allowed= 10,
+            guesses_taken= 3
+        )
+        guess = 'Q'
+        game.handleGuess(guess)
+        expectedLettersGuessed = initialLettersGuessed + [guess]
+        self.assertNotEquals( game.guesses_allowed, game.guesses_taken )
+
 
     def test_is_game_over_is_false_if_not_all_letters_guessed( self ):
-        pass
+        initialLettersGuessed = ['S', 'A', 'W', 'O', 'R','C']
+        game = Game(
+            word= 'TESTWORD',
+            guessed_word_state= ['','','S','','W','O','R',''],
+            letters_guessed = initialLettersGuessed.copy(),
+            guesses_allowed= 10,
+            guesses_taken= 3
+        )
+        guess = 'Q'
+        game.handleGuess(guess)
+        expectedLettersGuessed = initialLettersGuessed + [guess]
+        self.assertNotEquals( game.word, ''.join(game.guessed_word_state) )
 
     def test_is_game_over_is_true_if_no_guesses_left( self ):
-        pass
+        initialLettersGuessed = ['S', 'A', 'W', 'O', 'R','C']
+        game = Game(
+            word= 'TESTWORD',
+            guessed_word_state= ['','','S','','W','O','R',''],
+            letters_guessed = initialLettersGuessed.copy(),
+            guesses_allowed= 10,
+            guesses_taken= 9
+        )
+        guess = 'Q'
+        game.handleGuess(guess)
+        expectedLettersGuessed = initialLettersGuessed + [guess]
+        self.assertEquals( game.guesses_allowed, game.guesses_taken )
 
     def test_is_game_over_is_true_if_all_letters_guessed( self ):
-        pass
+        initialLettersGuessed = ['S', 'A', 'W', 'O', 'R','C', 'D', 'T']
+        game = Game(
+            word= 'TESTWORD',
+            guessed_word_state= ['T','','S','T','W','O','R','D'],
+            letters_guessed = initialLettersGuessed.copy(),
+            guesses_allowed= 10,
+            guesses_taken= 3
+        )
+        guess = 'E'
+        game.handleGuess(guess)
+        expectedLettersGuessed = initialLettersGuessed + [guess]
+        self.assertEquals( game.word, ''.join(game.guessed_word_state) )
